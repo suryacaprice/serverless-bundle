@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const slsw = require("serverless-webpack");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const WebpackBinPermission = require('webpack-bin-permissions')
+const WebpackBinPermission = require('./webpack-bin-permissions')
 
 const config = require("./config");
 const eslintConfig = require("./eslintrc.json");
@@ -122,9 +122,10 @@ function plugins() {
             context: servicePath,
             from: path.join(servicePath, data.from)
           };
-          new WebpackBinPermission(),
+          
         })
-      )
+      ),
+      new WebpackBinPermission(),
     );
   }
 
