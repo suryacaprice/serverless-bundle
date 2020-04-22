@@ -8,10 +8,18 @@ WebpackBinPermission.prototype.apply = function (compiler) {
     compiler.plugin('done', () => {
         const permissions = this.options.permissions || '755';
         const binPath = `${compiler.outputPath}/bin`;
+        const sharedlibpath = `${compiler.outputPath}/sharedlib`;
         fs.readdir(binPath, (err, items) => {
             if (items && items.length > 0) {
                 for (let i = 0; i < items.length; i += 1) {
                     fs.chmodSync(`${binPath}/${items[i]}`, permissions);
+                }
+            }
+        });
+        fs.readdir(sharedlibpath, (err, items) => {
+            if (items && items.length > 0) {
+                for (let i = 0; i < items.length; i += 1) {
+                    fs.chmodSync(`${sharedlibpath}/${items[i]}`, permissions);
                 }
             }
         });
