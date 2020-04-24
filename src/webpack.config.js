@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const slsw = require("serverless-webpack");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const WebpackBinPermission = require('./webpack-bin-permissions')
+const WebpackBinPermission = require("./webpack-bin-permissions");
 
 const config = require("./config");
 const eslintConfig = require("./eslintrc.json");
@@ -122,10 +122,9 @@ function plugins() {
             context: servicePath,
             from: path.join(servicePath, data.from)
           };
-          
         })
       ),
-      new WebpackBinPermission(),
+      new WebpackBinPermission()
     );
   }
 
@@ -154,7 +153,16 @@ module.exports = ignoreWarmupPlugin({
   stats: ENABLE_STATS ? "normal" : "errors-only",
   devtool: ENABLE_SOURCE_MAPS ? "source-map" : false,
   // Exclude "aws-sdk" since it's a built-in package
-  externals: ["aws-sdk", "knex", "sharp", "chrome-aws-lambda", "puppeteer", "jquery", "jsdom", "canvas"],
+  externals: [
+    "aws-sdk",
+    "knex",
+    "sharp",
+    "chrome-aws-lambda",
+    "puppeteer",
+    "jquery",
+    "jsdom",
+    "canvas"
+  ],
   mode: isLocal ? "development" : "production",
   performance: {
     // Turn off size warnings for entry points
