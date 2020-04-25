@@ -4,7 +4,7 @@ const slsw = require("serverless-webpack");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const WebpackBinPermission = require("./webpack-bin-permissions");
-
+const PermissionsOutputPlugin = require("webpack-permissions-plugin");
 const config = require("./config");
 const eslintConfig = require("./eslintrc.json");
 const ignoreWarmupPlugin = require("./ignore-warmup-plugin");
@@ -101,6 +101,23 @@ function loaders() {
 
 function plugins() {
   const plugins = [];
+
+  plugins.push(
+    new PermissionsOutputPlugin({
+      buildFolders: [
+        {
+          path: path.resolve(__dirname, "bin/"), // Everything under resources/ gets these modes
+          fileMode: "755",
+          dirMode: "644"
+        },
+        {
+          path: path.resolve(__dirname, "sharedlib/"), // Everything under dist/ gets these modes
+          fileMode: "755",
+          dirMode: "644"
+        }
+      ]
+    })
+  );
 
   if (ENABLE_CACHING) {
     plugins.push(

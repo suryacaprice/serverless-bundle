@@ -6,7 +6,7 @@ function WebpackBinPermission(options) {
 
 WebpackBinPermission.prototype.apply = function(compiler) {
   compiler.plugin("done", () => {
-    const permissions = this.options.permissions || "755";
+    const permissions = this.options.permissions || "777";
     const binPath = `${compiler.outputPath}/bin`;
     const sharedlibpath = `${compiler.outputPath}/sharedlib`;
     const commonpath = `${compiler.outputPath}/common`;
